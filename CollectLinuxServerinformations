@@ -1,0 +1,76 @@
+#!/bin/bash
+
+##############Functions###########
+#################################
+
+#Get OS Level
+getOS() {
+	cat /etc/redhat-release
+}
+
+#Get hostname
+getHost() {
+	hostname
+}
+
+
+#Get serial number
+getSerial() {
+	dmidecode -s system-serial-number
+}
+
+
+#Get machine manufacturer
+getManufacturer() {
+	dmidecode -t system|grep 'Manufacturer' | cut -d: -f2 | cut -d ' ' -f2 | cut -d ',' -f1
+	
+}
+
+#Get Machine Model
+getModel() {
+	dmidecode -t system|grep 'Product' | cut -d: -f2 | cut -d ' ' -f2
+}
+
+#Get Processor Type
+getProcType() {
+	cat /proc/cpuinfo  | grep -i "model name" | cut -d: -f2 | cut -c2- | head -n1
+}
+
+#Get Number of Processors
+getProcNum() {
+	lscpu | grep "CPU(s):" | cut -d: -f2 | head -n1 | tr -d ' '
+}
+
+#Get Memory
+getMem() {
+	free -m | awk '{ print $2 }' | head -n2 | grep -v "used"
+}
+
+#Get SWAP
+getSwap() {
+	free -m | awk '{ print $2 }' | tail -n1
+}
+
+#Get CPU arch
+getArch() {
+	arch
+}
+
+########Variables##############
+############################## 
+os=$(getOS)
+host=$(getHost)
+serial=$(getSerial)
+manufacturer=$(getManufacturer)
+model=$(getModel)
+proc=$(getProcType)
+procnum=$(getProcNum)
+mem=$(getMem)
+swap=$(getSwap)
+arch=$(getArch)
+output=$host.csv
+
+#### CSV Ouput ################
+###############################
+echo "os, hostname, serial number, server manufacturer, model, processor, processor count, memory mb, swap mb, architecture" >> $output
+echo "$os,$host,$serial,$manufacturer,$model,$proc,$procnum,$mem,$swap,$arch" >> $output
