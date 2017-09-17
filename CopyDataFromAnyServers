@@ -1,0 +1,5 @@
+while read server ; do
+	echo "acessando... $server"
+	sshpass -p 'yourPassword' scp yourid@${server}:/server/directory/local /your/loca/
+  
+done<serverlistaix // txt file that you will need put server IP or Hostname verify your /etc/hosts
