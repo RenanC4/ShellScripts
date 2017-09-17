@@ -1,0 +1,12 @@
+virt-install --connect qemu:///system \
+  --name vm0001-dev \
+  --ram 2048 \
+  --arch x86_64 \
+  --vcpus 1 \
+  --location /mnt/ \
+  --extra-args "ks=/home/renan/Desktop/rhel6kickstart.ks" \
+  --os-type linux \
+  --os-variant rhel6 \
+  --disk path=/var/lib/libvirt/images/RenanMachine.qcow2 \
+  --network bridge=virbr1\
+  --vnc
