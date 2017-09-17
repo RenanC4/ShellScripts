@@ -1,0 +1,7 @@
+while read server ; do
+	echo "acessando... $server"
+	sshpass -p 'yourpassword' scp /your/local ypurid@${server}:/your/loca/in/server
+
+done<serverlistaix //txt with servers ip or hostname (verify hour /etc/hosts)
+
+
